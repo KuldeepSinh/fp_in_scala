@@ -42,6 +42,7 @@ object MyList {
   }
 
   //exercise 3.5 (check the curried syntax, there is no comma between 2 args of the method)
+  @tailrec
   def dropWhile[A](as: MyList[A]) (f: A => Boolean): MyList[A] = as match {
     case Nil => Nil
     case Cons(x, xs) => f(x) match {
@@ -160,6 +161,7 @@ object MyList {
     }
   }
 
+  @tailrec
   def forall[A](as: MyList[A])(f: A => Boolean): Boolean = as match {
     case Nil => true
     case Cons(x, xs) => f(x) match {
@@ -168,6 +170,7 @@ object MyList {
     }
   }
 
+  @tailrec
   def exists[A](as: MyList[A])(f: A => Boolean): Boolean = as match {
     case Nil => false
     case Cons(x, xs) => f(x) match {
@@ -176,6 +179,7 @@ object MyList {
     }
   }
 
+  @tailrec
   def startsWith[A](as: MyList[A], bs: MyList[A]): Boolean = (as, bs) match {
     case (_, Nil) => true
     case (Nil, _) => false
@@ -186,6 +190,7 @@ object MyList {
   }
 
   //exercise 3.24
+  @tailrec
   def subSequence[A](as: MyList[A], bs: MyList[A]): Boolean  = (as, bs) match {
     case (Nil, _) => false
     case (as, bs) => startsWith(as, bs) match {

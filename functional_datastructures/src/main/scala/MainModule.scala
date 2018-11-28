@@ -1,5 +1,6 @@
-import fpinscala.datastructures.{Cons, MyList, Nil}
+import fpinscala.datastructures.{Branch, Cons, Leaf, MyList, Nil}
 import fpinscala.datastructures.MyList._
+import fpinscala.datastructures.MyTree._
 
 object MainModule {
   def main(args: Array[String]): Unit = {
@@ -156,6 +157,36 @@ object MainModule {
     println(subSequence(MyList(1,2,3,4), MyList(4,3)))
     println(subSequence(MyList(1,2,3,4), MyList(2)))
     println(subSequence(MyList(1,2,3,4), MyList(4)))
+
+
+    //Tree Exercises
+    //size tests
+    println("\nsize tests")
+    println(size(Leaf(1)))
+    println(size(Branch(Leaf(1), Leaf(2))))
+    println(size2(Leaf(1)))
+    println(size2(Branch(Leaf(1), Leaf(2))))
+
+    //maximum tests
+    println("\nmaximum tests")
+    println(maximum(Leaf(1)))
+    println(maximum(Branch(Leaf(1), Leaf(2))))
+    println(maximum2(Leaf(1)))
+    println(maximum2(Branch(Leaf(1), Leaf(2))))
+
+    //depth tests
+    println("\ndepth tests")
+    println(depth(Leaf(1)))
+    println(depth(Branch(Leaf(1), Leaf(2))))
+    println(depth2(Leaf(1)))
+    println(depth2(Branch(Leaf(1), Leaf(2))))
+
+    //map tests
+    println("\nmap tests")
+    println(fpinscala.datastructures.MyTree.map(Leaf(1))(a => a * a))
+    println(fpinscala.datastructures.MyTree.map(Branch(Leaf(1), Leaf(2)))(a => a * a))
+    println(map2(Leaf(1))(a => a * a))
+    println(map2(Branch(Leaf(1), Leaf(2)))(a => a * a))
   }
 
 }
