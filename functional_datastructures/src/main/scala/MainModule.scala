@@ -1,4 +1,4 @@
-import fpinscala.datastructures.{Branch, Cons, Leaf, MyList, Nil}
+import fpinscala.datastructures.{Branch, Cons, Leaf, MyList, MyTree, Nil}
 import fpinscala.datastructures.MyList._
 import fpinscala.datastructures.MyTree._
 
@@ -187,6 +187,13 @@ object MainModule {
     println(fpinscala.datastructures.MyTree.map(Branch(Leaf(1), Leaf(2)))(a => a * a))
     println(map2(Leaf(1))(a => a * a))
     println(map2(Branch(Leaf(1), Leaf(2)))(a => a * a))
+
+    //one more map test
+    def l = Leaf(1)
+    def b1 = Branch(Leaf(3), Leaf(4))
+    def b2 = Branch(b1, l)
+    println(map2(b2)(a => a * a * a))
+
   }
 
 }
