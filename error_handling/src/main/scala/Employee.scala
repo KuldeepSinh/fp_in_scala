@@ -13,4 +13,11 @@ object EmployeeDirectory {
     case "Bob" => Some(bob)
     case _ => None
   }
+
+  def lookupByNameEither(name: String): MyEither[String, Employee] = name match {
+    case "Joni" => Right(joni)
+    case "Joe" => Right(joe)
+    case "Bob" => Right(bob)
+    case _ => Left(s"No employee found by name = $name.")
+  }
 }
