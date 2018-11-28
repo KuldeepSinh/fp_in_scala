@@ -1,5 +1,5 @@
 import fpinscala.datastructures.{Cons, MyList, Nil}
-import fpinscala.datastructures.MyList.{sum, tail, setHead, drop, dropWhile, append, init, length, sum2, product2, length2, sum3, product3, reverse, append2, append3}
+import fpinscala.datastructures.MyList._
 
 object MainModule {
   def main(args: Array[String]): Unit = {
@@ -80,6 +80,82 @@ object MainModule {
     //append3 test
     println("\nappend3 test")
     println(append3(MyList(1,2,3), MyList(11,22,33)))
+
+    //concatenate test
+    println("\nconcatenate test")
+    println(concatenate(MyList(MyList(1,2,3), MyList(11,22,33))))
+
+    //map tests
+    println("\nmap tests")
+    println(addOneToEach(MyList(1,2,3)))
+    println(toStringEach(MyList(1.0,2.0,3.3)))
+
+
+    //filter test
+    println("\nfilter tests")
+    println(MyList.filter(MyList(1,2,3))(x => x < 2))
+    println(MyList.filter(MyList(1,2,3, 9, 2, 3, 7, 5, 0, 1, 22, 4))(x => x > 4))
+    println("\nfilter2 tests")
+    println(MyList.filter2(MyList(1,2,3))(x => x < 2))
+    println(MyList.filter2(MyList(1,2,3, 9, 2, 3, 7, 5, 0, 1, 22, 4))(x => x > 4))
+
+    //flatMap test
+    println("\nflatMpa test")
+    println(MyList.flatMap(MyList(1,2,3))(i => MyList(i, i, i)))
+
+    //zipWith test
+    println("\nzipWith test")
+    println(addMyLists(MyList(1,2,3), MyList(11,22,33)))
+
+    //take tests
+    println("\ntake tests")
+    println(take(Nil, 1))
+    println(take(MyList(1,2,3), 0))
+    println(take(MyList(1,2,3), 1))
+    println(take(MyList(1,2,3), 2))
+    println(take(MyList(1,2,3), 3))
+    println(take(MyList(1,2,3), 4))
+
+    //takeWhile tests
+    println("\ntakeWhile tests")
+    println(takeWhile(MyList(1,2,3,4,5,6,7,8,9,10)) (x => x < 6)) //notice the curried syntax while calling the function
+    println(takeWhile(MyList(1,2,3,4,5,6,7,8,9,10)) (x => x > 6)) //notice the curried syntax while calling the function
+
+    //forall tests
+    println("\nforall tests")
+    println(forall(MyList(1,2,3,4,5)) (x => x < 6))
+    println(forall(MyList(1,2,3,4,5,6,7,8,9,10)) (x => x < 6)) //notice the curried syntax while calling the function
+    println(forall(MyList(1,2,3,4,5,6,7,8,9,10)) (x => x > 6)) //notice the curried syntax while calling the function
+
+
+    //forall tests
+    println("\nexists tests")
+    println(exists(MyList(1,2,3,4,5)) (x => x == 6))
+    println(exists(MyList(1,2,3,4,5,6,7,8,9,10)) (x => x < 6)) //notice the curried syntax while calling the function
+    println(exists(MyList(1,2,3,4,5,6,7,8,9,10)) (x => x > 6)) //notice the curried syntax while calling the function
+
+    //startsWith tests
+    println("\nstartsWith tests")
+    println(startsWith(MyList(1,2,3), MyList(11,2,33)))
+    println(startsWith(MyList(1,2,3), MyList(1,2,3)))
+    println(startsWith(MyList(1,2,3), MyList(1,2)))
+    println(startsWith(MyList(1,2,3), MyList(1)))
+
+
+    //subSequence tests
+    println("\nsubSequence tests")
+    println(subSequence(MyList(1,2,3), MyList(11,2,33)))
+    println(subSequence(MyList(1,2,3), MyList(1,2,3)))
+    println(subSequence(MyList(1,2,3), MyList(1,2)))
+    println(subSequence(MyList(1,2,3), MyList(1)))
+    println(subSequence(MyList(1,2,3,4), MyList(2,3,4)))
+    println(subSequence(MyList(1,2,3,4), MyList(2,3)))
+    println(subSequence(MyList(1,2,3,4), MyList(1,3)))
+    println(subSequence(MyList(1,2,3,4), MyList(1,4)))
+    println(subSequence(MyList(1,2,3,4), MyList(3,4)))
+    println(subSequence(MyList(1,2,3,4), MyList(4,3)))
+    println(subSequence(MyList(1,2,3,4), MyList(2)))
+    println(subSequence(MyList(1,2,3,4), MyList(4)))
   }
 
 }

@@ -94,8 +94,103 @@ object MyList {
   //exercise 3.12
   def reverse[A](as: MyList[A]): MyList[A] = foldLeft(as, MyList[A]()) ((x, y) => Cons(y, x))
 
+  //exercise 3.13
+
   //exercise 3.14
   def append2[A](as: MyList[A])(bs: MyList[A]): MyList[A] = foldLeft2(as) (bs) ((x, y) => Cons(y, x))
   def append3[A](as: MyList[A],bs: MyList[A]): MyList[A] = foldRight(as, bs) ((x, y) => Cons(x, y))
 
+  //exercise 3.15
+  def concatenate[A] (as: MyList[MyList[A]]) = foldLeft2 (as)(Nil:MyList[A])(append)
+
+  //exercise 3.16
+  def addOne (i: Int) = i + 1
+  def addOneToEach(as: MyList[Int]) = map(as) (addOne)
+
+  //exercise 3.17
+  def toStringEach(as: MyList[Double]) = map (as) (a => a.toString)
+
+
+  //exercise 3.18
+  def map[A,B](as: MyList[A])(f: A => B): MyList[B] = as match {
+    case Nil => Nil
+    case Cons(x, xs) => Cons(f(x), map(xs)(f))
+  }
+
+  //exercise 3.19
+  def filter[A](as: MyList[A])(f: A => Boolean): MyList[A] = as match {
+    case Nil => Nil
+    case Cons(x, xs) => f(x) match {
+      case true => Cons(x, filter(xs) (f))
+      case false => filter(xs) (f)
+    }
+  }
+
+  //exercise 3.20
+  def flatMap[A,B](as: MyList[A])(f: A => MyList[B]): MyList[B] = concatenate(map (as) (f))
+
+  //exercise 3.21
+  def filter2[A](as: MyList[A])(f: A => Boolean): MyList[A] =
+    flatMap(as)(a => f(a) match {
+      case true => MyList(a)
+      case false => Nil
+    })
+
+  //exercise 3.22
+  def addMyLists(as: MyList[Int], bs: MyList[Int]): MyList[Int] = zipWith(as, bs)((a,b) => a+b)
+
+  //exercise 3.23
+  def zipWith[A, B, C](as: MyList[A], bs: MyList[B])(f: (A, B) => C): MyList[C] = (as, bs) match {
+    case (Nil, _) => Nil
+    case (_, Nil) => Nil
+    case (Cons(a, as), Cons(b, bs)) => Cons(f(a, b), zipWith(as, bs)(f))
+  }
+
+  def take[A](as: MyList[A], n: Int): MyList[A] = (as, n) match {
+    case (Nil, _) => Nil
+    case (_, 0) => Nil
+    case (Cons(x, xs), n) => Cons(x, take(xs, n-1))
+  }
+
+  def takeWhile[A](as: MyList[A]) (f: A=>Boolean):MyList[A] = as match {
+    case Nil => Nil
+    case Cons(x, xs) => f(x) match {
+      case true => Cons(x, takeWhile(xs) (f))
+      case false => Nil
+    }
+  }
+
+  def forall[A](as: MyList[A])(f: A => Boolean): Boolean = as match {
+    case Nil => true
+    case Cons(x, xs) => f(x) match {
+      case true => forall(xs)(f)
+      case false => false
+    }
+  }
+
+  def exists[A](as: MyList[A])(f: A => Boolean): Boolean = as match {
+    case Nil => false
+    case Cons(x, xs) => f(x) match {
+      case true => true
+      case false => exists(xs) (f)
+    }
+  }
+
+  def startsWith[A](as: MyList[A], bs: MyList[A]): Boolean = (as, bs) match {
+    case (_, Nil) => true
+    case (Nil, _) => false
+    case (Cons(a, as), Cons(b, bs)) => (a == b) match {
+      case true => startsWith(as, bs)
+      case false => false
+    }
+  }
+
+  //exercise 3.24
+  def subSequence[A](as: MyList[A], bs: MyList[A]): Boolean  = (as, bs) match {
+    case (Nil, _) => false
+    case (as, bs) => startsWith(as, bs) match {
+      case true => true
+      case false => subSequence(tail(as), bs)
+    }
+  }
 }
