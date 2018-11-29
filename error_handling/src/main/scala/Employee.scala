@@ -20,4 +20,17 @@ object EmployeeDirectory {
     case "Bob" => Right(bob)
     case _ => Left(s"No employee found by name = $name.")
   }
+
+  def insuranceRateQuote(age: Int, tickets: Int): Int = age * tickets
+
+  def parseInsuranceRateQuote(age: String, tickets: String): MyOption[Int] = {
+    val optAge: MyOption[Int] = Try(age.toInt)
+    val optTickets: MyOption[Int] = Try(tickets.toInt)
+    MyOption.map2Option(optAge, optTickets) (insuranceRateQuote)
+  }
+
+  def Try[A](a: => A): MyOption[A] = {
+    try Some(a)
+    catch {case e: Exception => None}
+  }
 }

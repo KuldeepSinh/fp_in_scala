@@ -35,7 +35,28 @@ sealed trait MyOption[+A] {
       case false => None
     }
   }
+
+  //exercise 4.4
+  def sequence[A](as: List[MyOption[A]]): MyOption[List[A]] = ???
+
+  //exercise 4.5
+  def traverse[A, B](a: List[A])(f: A => MyOption[B]): MyOption[List[B]] = ???
+
+
 }
+
+object MyOption{
+  //exercise 4.3
+  def map2Option[A,B,C](a: MyOption[A], b: MyOption[B])(f: (A, B) => C): MyOption[C] = (a, b) match {
+    case (None, _) => None
+    case (_, None) => None
+    case (Some(a), Some(b)) => Some(f(a, b))
+  }
+
+
+
+}
+
 final case object None extends MyOption[Nothing]
 final case class Some[+A] (value: A) extends MyOption[A]
 

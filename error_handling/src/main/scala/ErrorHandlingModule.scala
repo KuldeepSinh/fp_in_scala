@@ -54,7 +54,10 @@ object ErrorHandlingModule {
     println(EmployeeDirectory.lookupByName("Joni").flatMap(_.manager).getOrElse("Does not report to any manager."))
     println(EmployeeDirectory.lookupByName("Alice").flatMap(_.manager).getOrElse("Does not report to any manager."))
 
-
+    //map2 Option test
+    println("\nmap2 Option Tests")
+    println(EmployeeDirectory.parseInsuranceRateQuote("14", "3"))
+    println(EmployeeDirectory.parseInsuranceRateQuote("14", "hello"))
   }
 
   def meanO(xs: Seq[Double]): MyOption[Double] = xs.isEmpty match {
@@ -76,4 +79,5 @@ object ErrorHandlingModule {
   //def lift[A,B](f: A => B): Option[A] => Option[B] = _ map f
   //def lift[A,B](f: A => B): Option[A] => Option[B] = (_: Option[A]).map(f)
   //def lift[A,B](f: A => B): Option[A] => Option[B] = (o: Option[A]) => o.map(f)
+
 }
