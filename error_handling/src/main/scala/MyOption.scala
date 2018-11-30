@@ -52,9 +52,6 @@ object MyOption{
     case (_, None) => None
     case (Some(a), Some(b)) => Some(f(a, b))
   }
-
-
-
 }
 
 final case object None extends MyOption[Nothing]
