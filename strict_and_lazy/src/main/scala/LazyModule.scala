@@ -42,6 +42,7 @@ object LazyModule {
     println(MyStream(1,2,3).take(1).toList)
     println(MyStream(1,2,3).take(2).toList)
     println(MyStream(1,2,3).take(3).toList)
+    println(MyStream(1,2,3).take(4).toList)
 
     //drop tests
     println("\ndrop tests")
@@ -49,15 +50,16 @@ object LazyModule {
     println(MyStream(1,2,3).drop(1).toList)
     println(MyStream(1,2,3).drop(2).toList)
     println(MyStream(1,2,3).drop(3).toList)
+    println(MyStream(1,2,3).drop(4).toList)
 
 
-//    //takeWhile tests
-//    println("\ntakeWhile tests")
-//    println(MyStream.empty.takeWhile(n => n >= 1).toList)
-//    println(MyStream(1,2,3).takeWhile(n => n >= 1).toList)
-//    println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 2).toList)
-//    println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 3).toList)
-//    println(MyStream(1,2,3).takeWhile(n => n >= 2).toList)
+    //takeWhile tests
+    println("\ntakeWhile tests")
+    println(MyStream[Int]().takeWhile(n => n > 0).toList)
+    println(MyStream(1,2,3).takeWhile(n => n == 1).toList)
+    println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 2).toList)
+    println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 3).toList)
+    println(MyStream(1,2,3).takeWhile(n => n >= 2).toList)
 
   }
 

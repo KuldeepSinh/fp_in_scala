@@ -1,6 +1,7 @@
 package fpinscala.lazyness
 
 import scala.annotation.tailrec
+import MyStream._
 
 
 sealed trait MyStream[+A] {
@@ -27,20 +28,26 @@ sealed trait MyStream[+A] {
 
   //exercise 5.2
   def take(n: Int): MyStream[A] = (this, n) match {
-    case (Empty, _) => MyStream.empty
-    case (Cons(h, _), 0) => MyStream.cons(h(), MyStream.empty)
-    case (Cons(h, t), n) => MyStream.cons(h(), t().take(n-1))
+    case (Empty, _) => empty
+    case (_, 0) => empty
+    case (Cons(h, t), _) => cons(h(), t().take(n-1))
   }
 
   //exercise 5.2
   def drop(n: Int): MyStream[A] = (this, n) match {
-    case (Empty, _) => MyStream.empty
-    case (Cons(_, t), 0) => t()
-    case (Cons(_, t), n) => t().drop(n-1)
+    case (Empty, _) => empty
+    case (_, 0) => this
+    case (Cons(_, t), _) => t().drop(n-1)
   }
 
   //exercise 5.3
-  def takeWhile(p: A => Boolean): MyStream[A] = ???
+  def takeWhile(p: A => Boolean): MyStream[A] = (this, p) match {
+    case (Empty, _) => empty
+    case (Cons(h, t), p) => p(h()) match {
+      case true => cons(h(), t().takeWhile(p))
+      case false => empty
+    }
+  }
 
 }
 
