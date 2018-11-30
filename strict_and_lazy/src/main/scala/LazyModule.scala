@@ -30,17 +30,50 @@ object LazyModule {
     println(MyStream(1,2,3).headOption)
     println(MyStream().headOption)
 
+    //toList tests
+    println("\ntoList tests")
+    println(MyStream().toList)
+    println(MyStream(1,2,3).toList)
+    println(MyStream(1,2,3).tailRecToList)
+
+    //take tests
+    println("\ntake tests")
+    println(MyStream(1,2,3).take(0).toList)
+    println(MyStream(1,2,3).take(1).toList)
+    println(MyStream(1,2,3).take(2).toList)
+    println(MyStream(1,2,3).take(3).toList)
+
+    //drop tests
+    println("\ndrop tests")
+    println(MyStream(1,2,3).drop(0).toList)
+    println(MyStream(1,2,3).drop(1).toList)
+    println(MyStream(1,2,3).drop(2).toList)
+    println(MyStream(1,2,3).drop(3).toList)
+
+
+//    //takeWhile tests
+//    println("\ntakeWhile tests")
+//    println(MyStream.empty.takeWhile(n => n >= 1).toList)
+//    println(MyStream(1,2,3).takeWhile(n => n >= 1).toList)
+//    println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 2).toList)
+//    println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 3).toList)
+//    println(MyStream(1,2,3).takeWhile(n => n >= 2).toList)
+
   }
 
-  def lazyIf[A](condition: Boolean, onTrue: () => A, onFalse: () => A): A = {
-    if (condition) onTrue() else onFalse()
+  def lazyIf[A](condition: Boolean, onTrue: () => A, onFalse: () => A): A = { //here, () => A is a thunk
+    if (condition) onTrue() else onFalse() //here, we are explicitly forcing thunk ot be evaluated by calling onTrue() and OnFalse()
   }
 
   //Notice : change in the scala syntax of onTrue and OnFalse
-  def lazyIf2[A](condition: Boolean, onTrue: => A, onFalse: => A): A = {
-    if (condition) onTrue else onFalse
+  def lazyIf2[A](condition: Boolean, onTrue: => A, onFalse: => A): A = { //scala syntax for defining thunks
+    if (condition) onTrue else onFalse //scala syntax for forcing thunks to evaluate
   }
 
+
+  // With either of above syntax (lazyIf and lazyIf2),
+  // an argument that’s passed unevaluated to a function will be
+  // evaluated once for each place it’s referenced in the body of the function
   def mayBeTwice(condition: Boolean, i: => Int) =
     if(condition) {i + i} //we are calling i for multiple times (twice) and adding the output of i
     else {0}
