@@ -33,6 +33,17 @@ sealed trait MyStream[+A] {
     case (Cons(h, t), _) => cons(h(), t().take(n-1))
   }
 
+
+  //exercise 5.2
+  def tailRecTake(n: Int): MyStream[A] =  {
+    def go(s: MyStream[A], n: Int, acc: MyStream[A]): MyStream[A] = (s, n) match {
+      case (Empty, _) => acc
+      case (_, 0) => acc
+      case (Cons(h, t), _) => go(t(), n-1, cons(h(),acc))
+    }
+    go(this, n, empty)
+  }
+
   //exercise 5.2
   def drop(n: Int): MyStream[A] = (this, n) match {
     case (Empty, _) => empty
@@ -48,6 +59,33 @@ sealed trait MyStream[+A] {
       case false => empty
     }
   }
+
+  //exercise 5.3
+  def tailRecTakeWhile(p: A => Boolean): MyStream[A] = {
+    def go(s: MyStream[A], p: A=>Boolean, acc: MyStream[A]): MyStream[A] = (s, p) match {
+      case (Empty, _) => acc
+      case (Cons(h, t), p) => p(h()) match {
+        case true => go(t(), p, cons(h(), acc))
+        case false => acc
+      }
+    }
+    go(this, p, empty)
+  }
+
+  def exists(p: A => Boolean): Boolean = {
+    def go(s: MyStream[A], p: A=> Boolean, acc: Boolean): Boolean = s match {
+      case Cons(h, t) => p(h()) || go(t(), p, acc)
+      case _ => acc
+    }
+    go(this, p, false)
+  }
+
+  def foldRight[B] (z: => B)(f: (A, => B) => B): B = this match {
+    case Cons(h, t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+  def foldedExists(p: A => Boolean): Boolean = foldRight(false) ((a,b) => p (a) || b)
+
 
 }
 
@@ -71,4 +109,7 @@ object MyStream {
   def apply[A](as: A*): MyStream[A] =
     if (as.isEmpty) empty
     else cons(as.head, apply(as.tail: _*))
+
+  //exercise 5.8
+  def constant[A] (a: A): MyStream[A] = cons(a, constant(a))
 }

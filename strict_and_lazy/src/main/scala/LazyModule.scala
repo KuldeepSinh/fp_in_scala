@@ -44,6 +44,15 @@ object LazyModule {
     println(MyStream(1,2,3).take(3).toList)
     println(MyStream(1,2,3).take(4).toList)
 
+
+    //tailRecTake tests
+    println("\ntailRecTake tests")
+    println(MyStream(1,2,3).tailRecTake(0).toList)
+    println(MyStream(1,2,3).tailRecTake(1).toList)
+    println(MyStream(1,2,3).tailRecTake(2).toList)
+    println(MyStream(1,2,3).tailRecTake(3).toList)
+    println(MyStream(1,2,3).tailRecTake(4).toList)
+
     //drop tests
     println("\ndrop tests")
     println(MyStream(1,2,3).drop(0).toList)
@@ -60,6 +69,38 @@ object LazyModule {
     println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 2).toList)
     println(MyStream(1,2,3).takeWhile(n => n >= 1 && n <= 3).toList)
     println(MyStream(1,2,3).takeWhile(n => n >= 2).toList)
+
+    //tailRecTakeWhile tests
+    println("\ntailRecTakeWhile tests")
+    println(MyStream[Int]().tailRecTakeWhile(n => n > 0).toList)
+    println(MyStream(1,2,3).tailRecTakeWhile(n => n == 1).toList)
+    println(MyStream(1,2,3).tailRecTakeWhile(n => n >= 1 && n <= 2).toList)
+    println(MyStream(1,2,3).tailRecTakeWhile(n => n >= 1 && n <= 3).toList)
+    println(MyStream(1,2,3).tailRecTakeWhile(n => n >= 2).toList)
+
+    //exists test
+    println("\nexists tests")
+    println(MyStream[Int]().exists(n => n > 0))
+    println(MyStream(1,2,3).exists(n => n == 1))
+    println(MyStream(1,2,3).exists(n => n > 1))
+    println(MyStream(1,2,3).exists(n => n < 1))
+
+    //foldedExists test
+    println("\nfoldedExists tests")
+    println(MyStream[Int]().foldedExists(n => n > 0))
+    println(MyStream(1,2,3).foldedExists(n => n == 1))
+    println(MyStream(1,2,3).foldedExists(n => n > 1))
+    println(MyStream(1,2,3).foldedExists(n => n < 1))
+
+    //infinite stream
+    def ones: MyStream[Int] = MyStream.cons(1, ones)
+    println(ones.take(5).toList)
+
+    //constant test
+    println(MyStream.constant(42).take(10).toList)
+    println(MyStream.constant(42).take(0).toList)
+
+
 
   }
 
